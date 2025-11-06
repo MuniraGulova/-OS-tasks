@@ -1,1 +1,1 @@
-🍂 This repository will contain tasks for the OS
+🍂 This repository will contain OS related tasks.
