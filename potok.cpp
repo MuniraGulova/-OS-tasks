@@ -18,25 +18,25 @@ public:
         }
     }
 
-    long long sum_single_thread() {
-        long long sum = 0;
+    int sum_single_thread() {
+       int sum = 0;
         for (int i = 0; i < 1000000; i++) {
             sum += vec[i];
         }
         return sum;
     }
 
-    long long sum_part(int start, int end) {
-        long long local_sum = 0;
+    int sum_part(int start, int end) {
+        int local_sum = 0;
         for (int i = start; i < end; i++) {
             local_sum += vec[i];
         }
         return local_sum;
     }
 
-    long long sum_four_threads() {
+    int sum_four_threads() {
         int part_size = 250000;
-        long long results[4] = {0};
+        int results[4] = {0};
 
         std::thread threads[4];
 
@@ -52,7 +52,7 @@ public:
             threads[i].join();
         }
 
-        long long total = 0;
+        int total = 0;
         for (int i = 0; i < 4; i++) {
             total += results[i];
         }
@@ -65,7 +65,7 @@ int main() {
 
     //Однопоточная sum
     auto start1 = std::chrono::high_resolution_clock::now();
-    long long sum1 = obj.sum_single_thread();
+    int sum1 = obj.sum_single_thread();
     auto end1 = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> diff1 = end1 - start1;
 
@@ -74,7 +74,7 @@ int main() {
 
     //Четырёхпоточная
     auto start2 = std::chrono::high_resolution_clock::now();
-    long long sum2 = obj.sum_four_threads();
+    int sum2 = obj.sum_four_threads();
     auto end2 = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> diff2 = end2 - start2;
 
@@ -83,3 +83,11 @@ int main() {
 
     return 0;
 }
+
+/*
+*Sum (1 potok): 49445733
+Time (1 potok): 0.00613 sec
+
+Sum (4 potok): 49445733
+Time (4 potok): 0.0168568 sec
+ **/
