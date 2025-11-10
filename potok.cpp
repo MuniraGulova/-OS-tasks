@@ -5,22 +5,22 @@
 #include <thread>
 #include <chrono>
 
-class MyClass {
-public:
+class ThreadSum {
+private:
     std::vector<int> vec;
-
-    MyClass() {
-        vec.resize(1000000);
+public:
+    ThreadSum() {
+        vec.resize(100000000);
         srand(static_cast<unsigned>(time(0)));
 
-        for (int i = 0; i < 1000000; i++) {
+        for (int i = 0; i < 10000000; i++) {
             vec[i] = rand() % 100;
         }
     }
 
     int sum_single_thread() {
        int sum = 0;
-        for (int i = 0; i < 1000000; i++) {
+        for (int i = 0; i < 100000000; i++) {
             sum += vec[i];
         }
         return sum;
@@ -35,7 +35,7 @@ public:
     }
 
     int sum_four_threads() {
-        int part_size = 250000;
+        int part_size = 25000000;
         int results[4] = {0};
 
         std::thread threads[4];
@@ -61,7 +61,7 @@ public:
 };
 
 int main() {
-    MyClass obj;
+    ThreadSum obj;
 
     //Однопоточная sum
     auto start1 = std::chrono::high_resolution_clock::now();
@@ -84,10 +84,10 @@ int main() {
     return 0;
 }
 
-/*
-*Sum (1 potok): 49445733
-Time (1 potok): 0.00613 sec
+/*Result
+Sum (1 potok): 494568461
+Time (1 potok): 0.520452 sec
 
-Sum (4 potok): 49445733
-Time (4 potok): 0.0168568 sec
+Sum (4 potok): 494568461
+Time (4 potok): 0.124251 sec
  **/
